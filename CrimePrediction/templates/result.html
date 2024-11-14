@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Prediction Result</title>
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <h1 class="color-change">Crime Forecasting</h1>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./solution.html">Solution</a></li>
+                <li><a href="./ContactUs.html">Contact us</a></li>
+                <li><a href="./FAQs.html">FAQs</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="res-container">
+        <h1>Crime Prediction Result</h1>
+        <div class="main-res">
+            <div class="main_details">
+                <div class="text-details">
+                    <h1>STATE/UT : <b id="state">MAHARASHTRA</b></h1>
+                    <p>Result: <b id="result">Low Crime</b></p>
+                    <p>Murder: <b id="murder">1234</b></p>
+                    <p>Total Theft: <b id="theft">3214</b></p>
+                    <p>Riots: <b id="riots">8765</b></p>
+                    <p>Crime On Women: <b id="women">4563</b></p>
+                    <p>Total IPC Crimes: <b id="ipc">6453</b></p>
+                </div>
+                <div class="graph">
+                    <canvas id="myChart" class="pieChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <canvas id="graph" class="barChart"></canvas>
+            </div>
+            <div>
+                <canvas id="Year" class="Year"></canvas>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+<script>
+    let result = document.getElementById("result");
+    var textContent = result.textContent.trim();
+    if (textContent == "High Crime") {
+        result.style.color = "red";
+    }
+    else {
+        result.style.color = "green";
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Access the heading element
+        const murder = document.getElementById('murder');
+        const theft = document.getElementById('theft');
+        const riots = document.getElementById('riots');
+        const women = document.getElementById('women');
+        const ipc = document.getElementById('ipc');
+
+        // Read the text content from the heading element
+        let murderText = murder.textContent;
+        let theftText = theft.textContent;
+        let riotsText = riots.textContent;
+        let womenText = women.textContent;
+        let ipcText = ipc.textContent;
+
+        console.log(murderText + " " + theftText + " " + theftText + " " + womenText + " " + ipcText);
+
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Murder', 'Theft', 'Riots', 'Women', 'IPC'],
+                datasets: [{
+                    label: 'Value',
+                    data: [murderText, theftText, riotsText, womenText, ipcText],
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#FF4D4D',
+                        '#ffecda',
+                        '#25b1bf',
+                        '#61bc84',
+                        '#00E5FF'
+
+                    ],
+                    borderColor: '#1A1F2B',
+                    pointStyle: 'dash',
+                    hoverBackgroundColor: '#2C3A4F',
+                    hoverBorderColor: '#fff'
+
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'BASED ON DATA (2001 - 2014)',
+                        font: {
+                            weight: 'Bolder',
+                            size: '20'
+                        }
+                    }
+                }
+            }
+        });
+
+        const state = document.getElementById('state');
+        let stateText = state.textContent;
+
+        console.log(stateText);
+
+        let Crime_Names = ['Crime rate', 'Murder rate', 'Rape rate', 'Kidnapping rate', 'Crimes against children'];
+        const latestTrent = {
+            'ANDHRA PRADESH': [13.7, 1.8, 4.5, 1.6, 17.7],
+            'ARUNACHAL PRADESH': [32.0, 3.2, 11.1, 5.5, 27.5],
+            'ASSAM': [76.6, 3.4, 10.0, 21.6, 43.7],
+            'BIHAR': [35.4, 2.3, 1.3, 8.2, 14.5],
+            'CHANDIGARH': [28.6, 3.4, 7.4, 9.1, 61.6],
+            'GOA': [22.1, 1.7, 9.3, 3.3, 39.5],
+            'GUJARAT': [11.9, 1.4, 1.8, 2.3, 21.6],
+            'HARYANA': [43.3, 3.8, 12.3, 12.0, 62.5],
+            'HIMACHAL PRADESH': [23.8, 1.2, 9.8, 5.8, 34.4],
+            'JHARKHAND': [34.9, 4.1, 7.6, 4.6, 13.5],
+            'KARNATAKA': [22.8, 2.0, 1.7, 4.3, 37.5],
+            'KERALA': [23.8, 0.9, 4.2, 1.0, 48.2],
+            'MADHYA PRADESH': [30.7, 2.4, 7.2, 11.2, 66.7],
+            'MAHARASHTRA': [35.1, 1.9, 4.2, 8.4, 47.8],
+            'MANIPUR': [17.2, 1.5, 1.6, 2.7, 13.8],
+            'MEGHALAYA': [17.6, 2.4, 4.6, 3.7, 34.9],
+            'MIZORAM': [15.3, 2.0, 4.3, 0.2, 28.9],
+            'NAGALAND': [7.2, 1.2, 0.4, 2.2, 6.2],
+            'ODISHA': [48.6, 3.0, 6.4, 12.3, 54.8],
+            'PUNJAB': [20.8, 2.4, 3.2, 5.9, 29.2],
+            'RAJASTHAN': [29.0, 2.2, 16.4, 9.7, 27.2],
+            'SIKKIM': [16.1, 2.1, 2.5, 5.8, 72.4],
+            'TAMIL NADU': [16.2, 2.2, 1.1, 1.1, 29.3],
+            'TELANGANA': [26.1, 2.7, 4.4, 7.3, 49.8],
+            'TRIPURA': [40.1, 3.0, 3.0, 3.3, 19.2],
+            'UTTAR PRADESH': [2.7, 1.6, 2.6, 6.3, 19.7],
+            'UTTARAKHAND': [27.6, 1.8, 9.6, 7.2, 32.8],
+            'WEST BENGAL': [48.7, 1.9, 2.3, 8.5, 31.7],
+            'A & N ISLANDS': [21.9, 4.0, 7.9, 1.7, 110.4],
+            'CHHATTISGARH': [29.9, 1.4, 13.3, 12.7, 72.2],
+            'D & N HAVELI': [9.8, 1.3, 0.8, 4.3, 54.1],
+            'DAMAN & DIU': [9.8, 1.3, 0.8, 4.3, 54.1],
+            'Delhi UT': [57.0, 2.2, 12.9, 26.7, 128.5],
+            'JAMMU & KASHMIR': [22.9, 1.0, 4.9, 7.5, 17.2],
+            'Ladakh': [7.7, 1.7, 1.5, 1.3, 1.2],
+            'LAKSHADWEEP': [7.4, 1.5, 0.0, 0.0, 85.4],
+            'PUDUCHERRY': [12.1, 1.2, 0.2, 2.5, 34.0],
+        };
+
+        const YearTrend = {
+            'ANDHRA PRADESH': [144703,	145751,	238105,	222199],
+            'ARUNACHAL PRADESH': [2817,	2877,	2503,	3039],
+            'ASSAM': [120572,	132783,	121609,	133239],
+            'BIHAR': [26,	25,	14,	282083],
+            'CHANDIGARH': [98233,	96561,	103173,	110633],
+            'GOA': [3884,	3727,	4366,	2991],
+            'GUJARAT': [393194,	431066,	699619,	731738],
+            'HARYANA': [191229,	166336,	192395,	206431],
+            'HIMACHAL PRADESH': [19594,	19924,	20630,	18833],
+            'JHARKHAND': [55664,	62206,	63570,	60765],
+            'KARNATAKA': [163416,	163691,	150080,	163697],
+            'KERALA': [12167,	453083,	554724,	524960],
+            'MADHYA PRADESH': [405129,	395619,	428046,	475918],
+            'MAHARASHTRA': [515674,	509443,	539003,	540800],
+            'MANIPUR': [3781,	3661,	2986,	3204],
+            'MEGHALAYA': [3482,	3897,	3744,	3428],
+            'MIZORAM': [2351,	2880,	2289,	3196],
+            'NAGALAND': [1775,	1661,	1511,	1478],
+            'ODISHA': [107408,	121525,	134230,	155420],
+            'PUNJAB': [70318,	72855,	82875,	73581],
+            'RAJASTHAN': [250546,	304394,	260378,	284569],
+            'SIKKIM': [869,	821,	675,	728],
+            'TAMIL NADU': [499188,	455094,	1377681,	756753],
+            'TELANGANA': [126858,	131254,	147504,	158809],
+            'TRIPURA': [6078,	5988,	4653,	4788],
+            'UTTAR PRADESH': [585157,	628578,	657925,	608082],
+            'UTTARAKHAND': [34715,	28268,	57332,	34875],
+            'WEST BENGAL': [188063,	188049,	182367,	181821],
+            'A & N ISLANDS': [3699,	4034,	2542,	1332],
+            'CHHATTISGARH': [5967,	4518,	3254,	2995],
+            'D & N HAVELI': [649,	660,	533,	579],
+            'DAMAN & DIU': [649,	660,	533,	579],
+            'Delhi UT': [262612,	316261,	266070,	306389],
+            'JAMMU & KASHMIR': [27276,	25408,	28911,	31675],
+            'Ladakh': [0,	0,	403,	559],
+            'LAKSHADWEEP': [77,	182,	147,	128],
+            'PUDUCHERRY': [4674,	4004,	7940,	4595],
+        };
+
+        const graph = document.getElementById('graph');
+
+        new Chart(graph, {
+            type: 'bar',
+            data: {
+                labels: Crime_Names,
+                datasets: [{
+                    label: 'per 100,000 of the population',
+                    data: latestTrent[stateText],
+                    borderWidth: 3,
+                    borderRadius: 10,
+                    barThickness: 70,
+                    barPercentage: 0.5,
+                    backgroundColor: '#FF4D4D',
+                    borderColor: '#1A1F2B',
+                    pointStyle: 'dash',
+                    hoverBackgroundColor: '#2C3A4F',
+                    hoverBorderColor: '#fff'
+
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'BASED ON DATA (2020 - 2023)',
+                        font: {
+                            weight: 'Bolder',
+                            size: '25'
+                        }
+                    }
+                }
+            }
+        });
+
+
+        const Year = document.getElementById('Year');
+
+        new Chart(Year, {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021'],
+                datasets: [{
+                    label: 'Total Number of Crimes',
+                    data: YearTrend[stateText],
+                    borderWidth: 5,
+                    borderRadius: 10,
+                    barThickness: 70,
+                    barPercentage: 0.5,
+                    backgroundColor: '#FF4D4D',
+                    borderColor: '#1A1F2B',
+                    pointStyle: 'dash',
+                    hoverBackgroundColor: '#2C3A4F',
+                    hoverBorderColor: '#fff',
+                    borderJoinStyle:'bevel',
+                    // pointBorderWidth: '1px'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    });
+    
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</html>

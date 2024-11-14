@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Prediction</title>
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <h1 class="color-change">Crime Forecasting</h1>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./solution.html">Solution</a></li>
+                <li><a href="./ContactUs.html">Contact us</a></li>
+                <li><a href="./FAQs.html">FAQs</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="predict-container">
+        <h1>Crime Prediction</h1>
+        <form action="/predict" method="post">
+            <div class="preOpt">
+            <label for="state">State : </label>
+            <select id="state" name="state" required><br><br>
+                <option>ANDHRA PRADESH</option>
+                <option>TELANGANA</option>
+                <option>A & N ISLANDS</option>
+                <option>ARUNACHAL PRADESH</option>
+                <option>ASSAM</option>
+                <option>BIHAR</option>
+                <option>CHANDIGARH</option>
+                <option>CHHATTISGARH</option>
+                <option>D & N HAVELI</option>
+                <option>DAMAN & DIU</option>
+                <option>Delhi UT</option>
+                <option>GOA</option>
+                <option>GUJARAT</option>
+                <option>HARYANA</option>
+                <option>HIMACHAL PRADESH</option>
+                <option>JAMMU & KASHMIR</option>
+                <option>JHARKHAND</option>
+                <option>KARNATAKA</option>
+                <option>KERALA</option>
+                <option>LAKSHADWEEP</option>
+                <option>MADHYA PRADESH</option>
+                <option>MAHARASHTRA</option>
+                <option>MANIPUR</option>
+                <option>MEGHALAYA</option>
+                <option>MIZORAM</option>
+                <option>NAGALAND</option>
+                <option>ODISHA</option>
+                <option>PUDUCHERRY</option>
+                <option>PUNJAB</option>
+                <option>RAJASTHAN</option>
+                <option>SIKKIM</option>
+                <option>TAMIL NADU</option>
+                <option>TRIPURA</option>
+                <option>UTTAR PRADESH</option>
+                <option>UTTARAKHAND</option>
+                <option>WEST BENGAL</option>
+            </select>
+            </div>
+            <div class="preInp">
+            <label for="year">Year : </label>
+            <input type="number" id="year" name="year" required>
+            <br><br>
+            </div>
+            <p id="year-error" style="color: red;"></p>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    // Get the input element
+<!--    alert("Heoooo")-->
+    var input = document.getElementById("year");
+    var errorMessage = document.getElementById("year-error");
+    
+    // Add event listener for input change
+    input.addEventListener("input", function() {
+        var inputValue = parseInt(input.value);
+    
+        // Check if the input value is within the desired range
+        if (inputValue < 2001 || inputValue > 2025 || isNaN(inputValue)) {
+            errorMessage.textContent = "Please enter a year between 2001 and 2025.";
+            input.setCustomValidity("Please enter a year between 2001 and 2025.");
+        } else {
+            errorMessage.textContent = "";
+            input.setCustomValidity("");
+        }
+    });
+    </script>
+</html>
